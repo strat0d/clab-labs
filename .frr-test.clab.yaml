@@ -1,0 +1,27 @@
+name: frr
+
+topology:
+  kinds:
+    linux:
+      image: frrouting/frr
+  nodes:
+    core-r1:
+      kind: linux
+      binds:
+        - $nodeDir/frr.conf:/etc/frr/frr.conf
+    core-r2:
+      kind: linux
+      binds:
+        - core-r2/frr.conf:/etc/frr/frr.conf
+    core-r3:
+      kind: linux
+      binds:
+        - core-r2/frr.conf:/etc/frr/frr.conf
+    core-r4:
+      kind: linux
+      binds:
+        - core-r2/frr.conf:/etc/frr/frr.conf
+
+  links:
+    - endpoints: ["core-r1:eth1", "core-r2:eth1"]
+

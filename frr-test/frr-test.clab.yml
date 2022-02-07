@@ -1,0 +1,107 @@
+name: frr
+prefix: ""
+
+topology:
+  kinds:
+    linux:
+      image: frrouting/frr
+  nodes:
+    core-r1:
+      kind: linux
+      binds:
+        - core-r1/frr.conf:/etc/frr/frr.conf
+        - core-r1/daemons:/etc/frr/daemons
+        - core-r1/intf.sh:/etc/frr/intf.sh
+        - core-r1/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    core-r2:
+      kind: linux
+      binds:
+        - core-r2/frr.conf:/etc/frr/frr.conf
+        - core-r2/daemons:/etc/frr/daemons
+        - core-r2/intf.sh:/etc/frr/intf.sh
+        - core-r2/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    core-r3:
+      kind: linux
+      binds:
+        - core-r3/frr.conf:/etc/frr/frr.conf
+        - core-r3/daemons:/etc/frr/daemons
+        - core-r3/intf.sh:/etc/frr/intf.sh
+        - core-r3/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    core-r4:
+      kind: linux
+      binds:
+        - core-r4/frr.conf:/etc/frr/frr.conf
+        - core-r4/daemons:/etc/frr/daemons
+        - core-r4/intf.sh:/etc/frr/intf.sh
+        - core-r4/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    pe-r1:
+      kind: linux
+      binds:
+        - pe-r1/frr.conf:/etc/frr/frr.conf
+        - pe-r1/daemons:/etc/frr/daemons
+        - pe-r1/intf.sh:/etc/frr/intf.sh
+        - pe-r1/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    pe-r2:
+      kind: linux
+      binds:
+        - pe-r2/frr.conf:/etc/frr/frr.conf
+        - pe-r2/daemons:/etc/frr/daemons
+        - pe-r2/intf.sh:/etc/frr/intf.sh
+        - pe-r2/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    pe-rr1:
+      kind: linux
+      binds:
+        - pe-rr1/frr.conf:/etc/frr/frr.conf
+        - pe-rr1/daemons:/etc/frr/daemons
+        - pe-rr1/intf.sh:/etc/frr/intf.sh
+        - pe-rr1/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    ce-cust1-r1:
+      kind: linux
+      binds:
+        - ce-cust1-r1/frr.conf:/etc/frr/frr.conf
+        - ce-cust1-r1/daemons:/etc/frr/daemons
+        - ce-cust1-r1/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    ce-cust1-r2:
+      kind: linux
+      binds:
+        - ce-cust1-r2/frr.conf:/etc/frr/frr.conf
+        - ce-cust1-r2/daemons:/etc/frr/daemons
+        - ce-cust1-r2/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+
+  links:
+    - endpoints: ["core-r1:eth1", "core-r2:eth1"]
+    - endpoints: ["core-r2:eth2", "core-r3:eth2"]
+    - endpoints: ["core-r3:eth1", "core-r4:eth1"]
+    - endpoints: ["core-r1:eth2", "core-r4:eth2"]
+    - endpoints: ["core-r1:eth3", "pe-r1:eth1"]
+    - endpoints: ["core-r3:eth3", "pe-r2:eth1"]
+    - endpoints: ["pe-r1:eth2", "ce-cust1-r1:eth2"]
+    - endpoints: ["pe-r2:eth2", "ce-cust1-r2:eth2"]
+    - endpoints: ["pe-rr1:eth1", "core-r4:eth3"]

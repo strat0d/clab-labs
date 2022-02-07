@@ -1,0 +1,42 @@
+name: frr2
+prefix: ""
+
+topology:
+  kinds:
+    linux:
+      image: frrouting/frr
+      binds:
+        - $nodeDir/frr.conf:/etc/frr/frr.conf
+        - $nodeDir/daemons:/etc/frr/daemons
+        - $nodeDir/intf.sh:/etc/frr/intf.sh
+        - $nodeDir/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+  nodes:
+    core-r1:
+      kind: linux
+    core-r2:
+      kind: linux
+    core-r3:
+      kind: linux
+    core-r4:
+      kind: linux
+    pe-r1:
+      kind: linux
+    pe-r2:
+      kind: linux
+    ce-cust1-r1:
+      kind: linux
+    ce-cust1-r2:
+      kind: linux
+  links:
+    - endpoints: ["core-r1:eth1", "core-r2:eth1"]
+    - endpoints: ["core-r2:eth2", "core-r3:eth2"]
+    - endpoints: ["core-r3:eth1", "core-r4:eth1"]
+    - endpoints: ["core-r1:eth2", "core-r4:eth2"]
+    - endpoints: ["core-r1:eth3", "pe-r1:eth1"]
+    - endpoints: ["core-r3:eth3", "pe-r2:eth1"]
+    - endpoints: ["pe-r1:eth2", "ce-cust1-r1:eth2"]
+    - endpoints: ["pe-r2:eth2", "ce-cust1-r2:eth2"]
+
