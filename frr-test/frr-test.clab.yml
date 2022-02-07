@@ -66,6 +66,26 @@ topology:
       exec:
         - bash /etc/frr/intf.sh
         - sysctl -p
+    pe-r3:
+      kind: linux
+      binds:
+        - pe-r3/frr.conf:/etc/frr/frr.conf
+        - pe-r3/daemons:/etc/frr/daemons
+        - pe-r3/intf.sh:/etc/frr/intf.sh
+        - pe-r3/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    pe-r4:
+      kind: linux
+      binds:
+        - pe-r4/frr.conf:/etc/frr/frr.conf
+        - pe-r4/daemons:/etc/frr/daemons
+        - pe-r4/intf.sh:/etc/frr/intf.sh
+        - pe-r4/mpls.conf:/etc/sysctl.conf
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
     pe-rr1:
       kind: linux
       binds:
@@ -94,14 +114,55 @@ topology:
       exec:
         - bash /etc/frr/intf.sh
         - sysctl -p
-
+    ce-cust1-r3:
+      kind: linux
+      binds:
+        - ce-cust1-r3/frr.conf:/etc/frr/frr.conf
+        - ce-cust1-r3/daemons:/etc/frr/daemons
+        - ce-cust1-r3/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    ce-cust1-r4:
+      kind: linux
+      binds:
+        - ce-cust1-r4/frr.conf:/etc/frr/frr.conf
+        - ce-cust1-r4/daemons:/etc/frr/daemons
+        - ce-cust1-r4/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    ce-cust2-r1:
+      kind: linux
+      binds:
+        - ce-cust2-r1/frr.conf:/etc/frr/frr.conf
+        - ce-cust2-r1/daemons:/etc/frr/daemons
+        - ce-cust2-r1/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
+    ce-cust2-r2:
+      kind: linux
+      binds:
+        - ce-cust2-r2/frr.conf:/etc/frr/frr.conf
+        - ce-cust2-r2/daemons:/etc/frr/daemons
+        - ce-cust2-r2/intf.sh:/etc/frr/intf.sh
+      exec:
+        - bash /etc/frr/intf.sh
+        - sysctl -p
   links:
     - endpoints: ["core-r1:eth1", "core-r2:eth1"]
     - endpoints: ["core-r2:eth2", "core-r3:eth2"]
     - endpoints: ["core-r3:eth1", "core-r4:eth1"]
     - endpoints: ["core-r1:eth2", "core-r4:eth2"]
     - endpoints: ["core-r1:eth3", "pe-r1:eth1"]
+    - endpoints: ["core-r2:eth3", "pe-r3:eth1"]
     - endpoints: ["core-r3:eth3", "pe-r2:eth1"]
+    - endpoints: ["core-r4:eth4", "pe-r4:eth1"]
     - endpoints: ["pe-r1:eth2", "ce-cust1-r1:eth2"]
     - endpoints: ["pe-r2:eth2", "ce-cust1-r2:eth2"]
+    - endpoints: ["pe-r3:eth2", "ce-cust1-r3:eth2"]
+    - endpoints: ["pe-r4:eth2", "ce-cust1-r4:eth2"]
+    - endpoints: ["pe-r1:eth3", "ce-cust2-r1:eth2"]
+    - endpoints: ["pe-r3:eth3", "ce-cust2-r2:eth2"]
     - endpoints: ["pe-rr1:eth1", "core-r4:eth3"]
