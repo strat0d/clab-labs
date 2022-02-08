@@ -1,5 +1,5 @@
 #!/bin/bash
-#pe-r1 interfaces
+#pe-r3 interfaces
 # add mgmt vrf
 ip link add dev mgmt type vrf table 100
 ip link set dev mgmt up
@@ -13,7 +13,7 @@ ip link set dev dum0 up
 # cust1 vrf + vni101 vxlan
 ip link add cust1 type vrf table 101
 ip link add br101 type bridge
-ip link add vxlan101 type vxlan id 101 dev dum0 dstport 4789
+ip link add vxlan101 type vxlan id 101 local 198.18.1.3 dstport 4789
 ip link set dev vxlan101 mtu 1500
 ip link set dev br101 mtu 9500
 ip link set dev vxlan101 master br101
