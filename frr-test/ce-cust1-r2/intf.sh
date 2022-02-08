@@ -9,4 +9,3 @@ ip link set dev eth0 master mgmt
 ip link add dev dum1 type dummy
 ip link set dev dum1 up
 
-ip link set dev eth2 mtu 1450
