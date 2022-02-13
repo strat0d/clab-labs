@@ -150,6 +150,9 @@ topology:
       exec:
         - bash /etc/frr/intf.sh
         - sysctl -p
+    pc1:
+      kind: linux
+      image: archlinux/archlinux
   links:
     - endpoints: ["core-r1:eth1", "core-r2:eth1"]
     - endpoints: ["core-r2:eth2", "core-r3:eth2"]
@@ -166,3 +169,4 @@ topology:
     - endpoints: ["pe-r1:eth3", "ce-cust2-r1:eth2"]
     - endpoints: ["pe-r3:eth3", "ce-cust2-r2:eth2"]
     - endpoints: ["pe-rr1:eth1", "core-r4:eth3"]
+    - endpoints: ["ce-cust1-r1:eth3", "pc1:eth1"]
